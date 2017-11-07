@@ -1,0 +1,364 @@
+<style>
+    .user_content{
+        background-color: #fff;
+        font-size: 14px;
+        font-weight: 200;
+        border-bottom: 1px solid #e8e8e8;
+        padding-bottom: 19px;
+        padding-top: 55px;
+        margin: 0 -13%;
+    }
+    .user_info_base{
+        width: 556px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        padding-bottom: 99px;
+    }
+    .user_info_base .user_info_img{
+        width: 100px;
+        height: 139px;
+    }
+    .user_info_img .user_icon{
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .user_info_img .user_icon>img{
+        width: 100%;
+        -ms-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+    }
+    .user_info_des{
+        height: 139px;
+        margin-top: -139px;
+        margin-left: 150px;
+    }
+    .user_name{
+        position: relative;
+        font-size: 24px;
+        font-weight: 500;
+        padding-bottom: 7px;
+    }
+    .user_name span:first-child {
+        display: inline-block;
+        width: 345px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .btn_letter{
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 680px;
+        background-image: url("img/letter.png");
+        width: 31px;
+        height: 31px;
+        background-size: 31px;
+    }
+    .user_des{
+        line-height: 20px;
+        overflow: hidden;
+        max-height: 60px;
+    }
+    .user_others{
+        padding-top: 26px;
+        font-weight: 500;
+    }
+    .user_others .active {
+        color: #333;
+    }
+    .user_others .active:hover {
+        color: #333;
+    }
+    .user_others div{
+        display: inline-block;
+        color: #999;
+        height: 42px;
+        text-align: center;
+        padding-right: 40px;
+    }
+    .user_others div:hover {
+        color: #57ad68;
+        /*text-decoration: none;*/
+    }
+    .user_others div span {
+        font-weight: 200;
+        font-size: 12px;
+    }
+    .user_article_page{
+        font-weight: 200;
+        width: 1200px;
+        margin: 0 auto;
+        padding: 60px 0;
+        color: #666;
+    }
+    .user_article_page span {
+        cursor: pointer;
+        position: relative;
+        padding-right: 26px;
+        color: #999;
+        font-size: 12px;
+    }
+    .user_article_page span a{
+        font-size: 14px;
+        color: #666;
+        padding-right: 5px;
+    }
+    .user_article_page .active a {
+        color: #57ad68;
+    }
+    .user_article_page span a:hover {
+        color: #57ad68;
+    }
+    .data_content{
+        width: 1200px;
+        margin: 0 auto;
+    }
+    .card-content .viewall a{
+        color: #57ad68;
+    }
+</style>
+<div class="user_content">
+    <div class="user_info_base">
+        <div class="user_info_img">
+            <div class="user_icon">
+                <img src="{{userId.head}}">
+            </div>
+        </div>
+        <div class="user_info_des">
+            <div class="user_name">
+                <span>{{userId.nickname}}</span>
+                <div style="float: right;">
+                    <button class="btn-follow"
+                            ng-click="followAuthor(authorFollow)">
+                        关注
+                    </button>
+                </div>
+                <!--<div style="float: right;">-->
+                    <!--<input type="hidden" id="id_to" value="{{userId.user_id}}" >-->
+                    <!--<input type="hidden" id="id_from" value="{{user.user_id}}">-->
+                    <!--<button class="btn-follow" ng-if="authorIds|attentionFilter:userId.user_id"-->
+                            <!--ng-click="followAuthor(authorFollow)">-->
+                        <!--关注-->
+                    <!--</button>-->
+                    <!--<button class="btn-del_follow" ng-if="authorIds|attention:user.user_id"-->
+                            <!--style="display: none" ng-click="cancelFollowUser(authorFollow)">-->
+                        <!--取消关注-->
+                    <!--</button>-->
+                <!--</div>-->
+                <span class="btn_letter" id="letterBtn" ng-click="showLetter($index)"></span>
+            </div>
+            <div class="user_des">{{userId.description}}</div>
+            <div class="user_others">
+                <div>
+                    {{userId.fans_count}}
+                    <br>
+                    <span>粉丝</span>
+                </div>
+                <div>
+                    {{userId.follow_count}}
+                    <br>
+                    <span>关注</span>
+                </div>
+                <div>
+                    {{userId.letter_count}}
+                    <br>
+                    <span>简讯</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="user_article_page" ng-init='activeTab=1'>
+       <span ng-click='activeTab=1' ng-class='{active:activeTab==1}'>
+           <a>全部</a>
+       </span>
+        <span ng-click='activeTab=2' ng-class='{active:activeTab==2}'>
+            <a>阅读</a>
+        </span>
+        <span ng-click='activeTab=3' ng-class='{active:activeTab==3}'>
+            <a>Ting</a>
+        </span>
+        <span ng-click='activeTab=4' ng-class='{active:activeTab==4}'>
+            <a>碎片</a>
+        </span>
+    </div>
+    <div class="data_content">
+        <!--全部-->
+        <div class="img_group" ng-show='activeTab==1'>
+            <div class="card-ting" style="left: 0px; opacity: 1;" ng-repeat="articleView in userId.articleViews">
+                <div class="card-img">
+                    <a href="#/radio/{{articleView.article_id}}" ng-show="{{articleView.topic_type == '电台'}}">
+                        <img src="{{articleView.thumbnail}}">
+                        <span></span>
+                    </a>
+                    <a href="#/article/{{articleView.article_id}}" ng-show="{{articleView.topic_type == '阅读'}}">
+                        <img src="{{articleView.thumbnail}}">
+                    </a>
+                </div>
+                <div class="card-item">
+                    <div class="card-title">
+                        <a href="#/article/{{articleView.article_id}}" target="_blank">
+                            {{articleView.title}}
+                        </a>
+                    </div>
+                    <div class="card-content" ng-show="{{articleView.topic_type == '阅读'}}">
+                        {{articleView.content| limitTo : 60 }}...
+                        <span class="viewall">
+                                <a href="#/article/{{articleView.article_id}}">VIEW ALL
+                                    <img src="img/viewall.png">
+                                </a>
+                            </span>
+                    </div>
+                    <div class="card-bottom">
+                        <span class="card-type">
+                            <a href="#/read" ng-show="{{articleView.topic_type == '阅读'}}">
+                                 {{articleView.topic_type}}
+                            </a>
+                            <a href="#/radio" ng-show="{{articleView.topic_type == '电台'}}">
+                                 {{articleView.topic_type}}
+                            </a>
+                        </span>
+                        <span ng-show="{{articleView.topic_type == '阅读'}}">
+                            {{articleView.read_count}}次阅读&nbsp;&nbsp;|&nbsp;&nbsp;
+                            评论:{{articleView.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            喜欢:{{articleView.like_count}}
+                        </span>
+                        <span ng-show="{{articleView.topic_type == '电台'}}">
+                            {{articleView.play_count}}次播放&nbsp;&nbsp;|&nbsp;&nbsp;
+                            评论:{{articleView.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            喜欢:{{articleView.like_count}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-ting" style="left: 0px; opacity: 1;" ng-repeat="timelineView in userId.timelineViews">
+                <div class="card-img">
+                    <a href="#/timeline/{{timelineView.timeline_id}}" target="_blank">
+                        <img src="{{timelineView.timelinePic_url}}">
+                    </a>
+                </div>
+                <div class="card-item">
+                    <div class="card-title">
+                        <a href="#/timeline/{{timelineView.timeline_id}}" target="_blank">
+                            {{timelineView.content}}
+                        </a>
+                    </div>
+                    <div class="card-bottom">
+                        <span class="card-type">
+                            <a href="#/timeline" target="_blank">
+                                碎片
+                            </a>
+                        </span>
+                        <span>
+                            {{timelineView.read_count}}次阅读&nbsp;&nbsp;|&nbsp;&nbsp;
+                            评论:{{timelineView.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            喜欢:{{timelineView.like_count}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--阅读-->
+        <div class="img_group" ng-show='activeTab==2'>
+            <div class="card-ting" style="left: 0px; opacity: 1;" ng-repeat="articleView in userId.articleViews" ng-show="{{articleView.topic_type == '阅读'}}">
+                <div class="card-img">
+                    <a href="#/article/{{articleView.article_id}}">
+                        <img src="{{articleView.thumbnail}}">
+                    </a>
+                </div>
+                <div class="card-item">
+                    <div class="card-title">
+                        <a href="#/article/{{articleView.article_id}}" target="_blank">
+                            {{articleView.title}}
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        {{articleView.content| limitTo : 60 }}...
+                        <span class="viewall">
+                                <a href="#/article/{{articleView.article_id}}">VIEW ALL
+                                    <img src="img/viewall.png">
+                                </a>
+                            </span>
+                    </div>
+                    <div class="card-bottom">
+                        <span class="card-type">
+                            <a href="#/read">
+                                 {{articleView.topic_type}}
+                            </a>
+                        </span>
+                        <span>
+                            {{articleView.read_count}}次阅读&nbsp;&nbsp;|&nbsp;&nbsp;
+                            评论:{{articleView.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            喜欢:{{articleView.like_count}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ting-->
+        <div class="img_group" ng-show='activeTab==3'>
+            <div class="card-ting" style="left: 0px; opacity: 1;" ng-repeat="articleView in userId.articleViews" ng-show="{{articleView.topic_type == '电台'}}">
+                <div class="card-img">
+                    <a href="#/radio/{{articleView.article_id}}">
+                        <img src="{{articleView.thumbnail}}">
+                        <span></span>
+                    </a>
+                </div>
+                <div class="card-item">
+                    <div class="card-title">
+                        <a href="#/article/{{articleView.article_id}}" target="_blank">
+                            {{articleView.title}}
+                        </a>
+                    </div>
+                    <div class="card-bottom">
+                        <span class="card-type">
+                            <a href="#/radio">
+                                 {{articleView.topic_type}}
+                            </a>
+                        </span>
+                        <span>
+                            {{articleView.play_count}}次播放&nbsp;&nbsp;|&nbsp;&nbsp;
+                            评论:{{articleView.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            喜欢:{{articleView.like_count}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--碎片-->
+        <div class="img_group" ng-show='activeTab==4'>
+            <div class="card-ting" style="left: 0px; opacity: 1;" ng-repeat="timelineView in userId.timelineViews">
+                <div class="card-img">
+                    <a href="#/timeline/{{timelineView.timeline_id}}" target="_blank">
+                        <img src="{{timelineView.timelinePic_url}}">
+                    </a>
+                </div>
+                <div class="card-item">
+                    <div class="card-title">
+                        <a href="#/timeline/{{timelineView.timeline_id}}" target="_blank">
+                            {{timelineView.content}}
+                        </a>
+                    </div>
+                    <div class="card-bottom">
+                        <span class="card-type">
+                            <a href="#/timeline" target="_blank">
+                                碎片
+                            </a>
+                        </span>
+                        <span>
+                            {{timelineView.read_count}}次阅读&nbsp;&nbsp;|&nbsp;&nbsp;
+                            评论:{{timelineView.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            喜欢:{{timelineView.like_count}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

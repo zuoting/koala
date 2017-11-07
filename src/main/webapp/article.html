@@ -1,0 +1,299 @@
+<style>
+    .index_content{
+        width: 960px;
+        margin: 0 auto;
+        clear: both;
+    }
+    .post{
+        border: 1px solid #e8e8e8;
+        padding: 46px 160px 124px;
+        margin-top: 10px;
+        margin-bottom: 125px;
+        background-color: #fff;
+        color: #333;
+        font-size: 12px;
+    }
+    /*作者区域*/
+    .note .post .article .author {
+        margin: 30px 0 40px;
+    }
+    .note .post .article .author .info {
+        vertical-align: middle;
+        display: inline-block;
+        margin-left: 8px;
+    }
+    .note .post .article .author .tag {
+        padding: 1px 2px;
+        font-size: 12px;
+        color: #ea6f5a;
+        border: 1px solid #ea6f5a;
+        border-radius: 3px;
+    }
+    .note .post .article .author .name {
+        margin-left: 3px;
+        margin-right: 3px;
+        font-size: 16px;
+        vertical-align: middle;
+    }
+    .note .post .article .author .name a {
+        color: #333;
+    }
+    /*关注用户按钮 */
+    .note .post .article .follow {
+        padding: 0 7px 0 5px;
+        font-size: 12px;
+    }
+    .follow span {
+        margin-left: 2px;
+        display: inline;
+    }
+    .note .post .article .author .meta {
+        margin-top: 5px;
+        font-size: 12px;
+        color: #969696;
+    }
+    .note .post .article .author .meta span {
+        padding-right: 5px;
+    }
+    .note .post .article .show-content {
+        color: #2f2f2f;
+        /*    word-break: break-word;*/
+        font-size: 16px;
+        font-weight: 400;
+        line-height:3;
+    }
+    .note .post .article .show-content .image-package {
+        padding-bottom: 25px;
+        width: 700px;
+        margin-left: -40px;
+        text-align: center;
+    }
+    .note .post .article .show-content .image-package img {
+        width: 100%;
+    }
+
+    .note .post .article .show-foot {
+        margin: 40px 0 30px;
+    }
+    .note .post .article .show-foot .notebook {
+        font-size: 12px;
+        color: #9b9b9b;
+    }
+    .note .post .article .show-foot .notebook img {
+        width: 4%;
+        margin-right: 2px;
+        color: #9b9b9b;
+    }
+    .note .post .article .show-foot .notebook span {
+        margin-right: 2px;
+        font-size: 15px;
+    }
+    .note .post .article .show-foot .copyright {
+        float: right;
+        margin-top: 5px;
+        font-size: 12px;
+        line-height: 1.7;
+        color: #9b9b9b;
+    }
+    .note .post .article .show-foot .modal-wrap {
+        float: right;
+        margin-top: 5px;
+        margin-right: 20px;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+    .note .post .article .show-foot .modal-wrap > a {
+        color: #9b9b9b;
+    }
+    /* 文章底部作者信息  */
+    .note .post .follow-detail {
+        padding: 20px;
+        background-color: hsla(0,0%,71%,.1);
+        border: 1px solid #e1e1e1;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    .note .post .follow-detail .info {
+        min-height: 47px;
+    }
+
+    .note .post .follow-detail .btn {
+        float: right;
+        margin-top: 4px;
+        padding: 8px 0;
+        width: 100px;
+        font-size: 16px;
+    }
+    .note .post .follow-detail .info .title {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.8;
+        margin-left: 4px;
+        text-decoration: none;
+    }
+    .note .post .follow-detail .info p {
+        margin-bottom: 0;
+        color: #969696;
+        margin-left: 53px;
+    }
+    .note .post .follow-detail .signature {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e1e1e1;
+    }
+    .note .post .follow-detail .signature span {
+        color: #969696;
+    }
+    .new-comment {
+        position: relative;
+        margin-left: 48px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    .new-comment .avatar {
+        position: absolute;
+        left: -48px;
+    }
+    .new-comment textarea {
+        padding: 10px 15px;
+        width: 100%;
+        height: 80px;
+        font-size: 13px;
+        border: 1px solid #dcdcdc;
+        border-radius: 4px;
+        background-color: hsla(0,0%,71%,.1);
+        resize: none;
+        display: inline-block;
+        vertical-align: top;
+        outline-style: none;
+    }
+</style>
+<div class="index_content">
+    <div class="note">
+        <div class="post">
+            <div class="article">
+                <h1 class="title" style="text-decoration: none;color:#333">{{articleId.title}} </h1>
+
+                <!-- 作者区域 -->
+                <div class="author">
+                    <a class="avatar" href="#/user/{{articleId.user_id}}">
+                        <img src="{{articleId.head}}" alt="180">
+                    </a>
+                    <div class="info">
+                        <div>
+                            <span class="tag">作者</span>
+                            <span class="name">
+                                <a href="#/user/{{articleId.user_id}}">{{articleId.nickname}}</a>
+                            </span>
+                            <!-- 文章数据信息 -->
+                            <div class="meta">
+                                <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                                <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最后编辑于 2017.04.19 09:37">
+                                   {{articleId.write_time| date : 'yyyy-MM-dd hh:mm:ss'}}
+                               </span>
+                                <span class="wordage">字数 {{articleId.words_count}}</span>
+                                <span class="views-count">阅读 {{articleId.read_count}}</span>
+                                <span class="comments-count">评论 {{articleId.comment_count}}</span>
+                                <span class="likes-count">喜欢 {{articleId.like_count}}</span>
+                            </div>
+                        </div>
+
+                        <!-- 收藏文章按钮 -->
+                        <div style="float: right;margin-top: -37px;">
+                            <input type="hidden" id="article_id" value="{{articleId.article_id}}">
+                            <input type="hidden" id="user_id" value="{{user.user_id}}">
+                            <button type="submit" class="btn-follow"
+                                    ng-click="followArticle(likeFroms)">收藏</button>
+                        </div>
+                    </div>
+                    <!-- 如果是当前作者，加入编辑按钮 -->
+                </div>
+                <!-- 文章内容 -->
+                <div class="show-content">
+                    <p>  {{articleId.content}}
+                    </p>
+                    <div class="image-package">
+                        <img ng-src="{{articleId.thumbnail}}"><br>
+                    </div>
+
+                </div>
+
+                <div class="show-foot">
+                    <a class="notebook" href="">
+                        <img ng-src="img/notebook.png">
+                    </a>
+                    <div class="copyright">
+                        © 著作权归作者所有
+                    </div>
+                    <div class="modal-wrap">
+                        <a id="report-modal">举报文章</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 文章底部作者信息 -->
+            <div class="follow-detail">
+                <div class="info">
+                    <a class="avatar" href="#/user/{{articleId.user_id}}">
+                        <img ng-src="{{articleId.head}}" alt="180">
+                    </a>
+                    <a class="btn btn-success follow" style="background-color:#f0ad4e;border: none;">
+                        <span>喜欢</span>
+                        <span>| {{articleId.like_count}} </span>
+                    </a>
+                    <a class="title" href="#/personal">{{articleId.nickname}}</a>
+                    <p>写了 {{articleId.words_count}} 字，被  {{articleId.read_count}}人阅读，获得了 {{articleId.like_count}} 个喜欢</p>
+                </div>
+                <div class="signature">
+                    <span>{{articleId.description}}</span>
+                </div>
+            </div>
+            <!--  写下你的评论-->
+            <form class="new-comment">
+                <a class="avatar" href="#/user/{{articleId.user_id}}">
+                    <img ng-src="{{user.head}}" style="width:40px;">
+                </a>
+                <textarea placeholder="写下你的评论..." ng-model="content">
+                    <input type="hidden" id="article_id1" value="{{articleId.article_id}}">
+                    <input type="hidden" id="user_id1" value="{{user.user_id}}">
+                </textarea>
+                <div class="write-function-block" style="height: 50px;">
+                    <div class="hint" style="float: left;margin: 20px 0 0 20px;font-size: 13px;color: #969696;">Ctrl+Return 发表</div>
+                    <button class="btn btn-send"
+                            style="float: right;width: 78px;margin: 10px 0;padding: 8px 18px;font-size: 16px;border: none;border-radius: 4px;color: #fff !important;background-color: #57ad68;cursor: pointer;outline: none;display: block;"
+                            ng-click="commentArticle(content)">
+                        发送
+                    </button>
+                    <a href="javascript:void (0);" class="cancel" style="float: right;margin: 18px 30px 0 0;font-size: 16px;color: #969696;">取消</a>
+                </div>
+            </form>
+            <div style="font-size: 20px;border-bottom: 1px solid #f0f0f0;padding-bottom: 10px;">
+                <span>{{articleId.comment_count}}条评论</span>
+            </div>
+            <div class="comment-list" ng-repeat="comment in articleId.commentList"
+                 style="padding: 20px 0 30px;border-bottom: 1px solid #f0f0f0;border-top: 1px solid #f0f0f0;">
+                <div>
+                    <div class="author" style="margin-bottom: 15px;">
+                        <a class="avatar" href="#/user/{{articleId.user_id}}">
+                            <img style="border-radius: 100%;width:40px" src="{{comment.head}}">
+                        </a>
+                        <div class="info" style="display: inline-block;vertical-align: middle;">
+                            <a href="#/user/{{articleId.user_id}}" class="name"
+                               style="font-size: 15px;color: #333;margin-left: 4px;">
+                                {{comment.nickname}}
+                            </a>
+                            <div class="meta" style="font-size: 12px;color: #969696;">
+                                <span> {{articleId.comment_count-$index}}楼</span>
+                                <span style="margin-left: 4px;">{{comment.comment_time| date : 'yyyy-MM-dd hh:mm:ss'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-wrap">
+                        <p style="font-size: 16px;">{{comment.content}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

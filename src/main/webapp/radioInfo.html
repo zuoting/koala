@@ -1,0 +1,244 @@
+<style>
+
+    #bgMusic{
+        display:none;
+    }
+    /*文章音频播放*/
+    .ting_article_content{
+        margin-top: 50px;
+    }
+    .ting_article_content .ting_img{
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+    }
+    .ting_article_content .ting_img img{
+        width:100%;
+    }
+    .ting__info_content{
+        width: 609px;
+        height: 300px;
+        margin-top: -300px;
+        float: right;
+        font-size: 14px;
+        font-weight: lighter;
+        position: relative;
+        color: #999;
+    }
+    .ting_info_title{
+        font-size: 40px;
+        color: #333;
+        font-weight: 400;
+    }
+    .ting_info_others{
+        color: #999;
+        padding-top: 9px;
+        padding-bottom: 14px;
+        font-weight: 100;
+        font-size: 12px;
+    }
+    .ting_all_author{
+        line-height: 23px;
+        font-weight: 100;
+        font-size: 14px;
+        color: #999;
+    }
+    .ting_all_author a {
+        font-weight: 200;
+        color: #57ad68;
+    }
+    .play_article{
+        bottom: 0;
+        position: absolute;
+        width: 129px;
+        height: 50px;
+        line-height: 50px;
+        color: #57ad68;
+        cursor: pointer;
+        -ms-border-radius: 25px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        font-weight: 200;
+        border: 1px solid #57ad68;
+        padding-left: 53px;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        background-position: 12px center;
+        background-image: url("img/play_stop.png");
+    }
+    .play_start,.play_stop{
+        color: #57ad68;
+        cursor: pointer;
+        -ms-border-radius: 25px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        font-weight: 200;
+        border: 1px solid #57ad68;
+        padding-left: 53px;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        background-position: 12px center;
+    }
+    .play_start{
+        background-image: url("img/play_start.png");
+    }
+    .play_stop{
+        background-image: url("img/play_stop.png");
+    }
+    /*原文块*/
+    .ting_article_view .article_content{
+        border: 1px solid #e8e8e8;
+        line-height: 24px;
+        margin-bottom: 50px;
+        -ms-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 30px 127px;
+        padding-bottom: 50px;
+        font-weight: 200;
+        background-color: #fff;
+        font-size: 14px;
+        color: #333;
+        position: relative;
+    }
+    /*评论块*/
+    .ting_article_comment{
+        border: 1px solid #e8e8e8;
+        background-color: #fff;
+        padding-bottom: 125px;
+        margin-bottom: 125px;
+    }
+    .new-comment {
+        position: relative;
+        margin-left: 48px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    .new-comment .avatar {
+        position: absolute;
+        left: -48px;
+    }
+    .new-comment textarea {
+        padding: 10px 15px;
+        width: 100%;
+        height: 80px;
+        font-size: 13px;
+        border: 1px solid #dcdcdc;
+        border-radius: 4px;
+        background-color: hsla(0,0%,71%,.1);
+        resize: none;
+        display: inline-block;
+        vertical-align: top;
+        outline-style: none;
+    }
+</style>
+<div class="index_content">
+    <audio  id="bgMusic" src="" autoplay="autoplay"></audio>
+    <div class="radio_info_box">
+        <!--文章音频播放-->
+        <div class="ting_article_content">
+            <div class="ting_img">
+                <img src="{{radioArticleId.thumbnail}}">
+            </div>
+            <div class="ting__info_content">
+                <div class="ting_info_title">{{radioArticleId.title}}</div>
+                <div class="ting_info_others">
+                    {{radioArticleId.play_count}}次播放&nbsp;&nbsp;|&nbsp;&nbsp;
+                    评论:&nbsp;{{radioArticleId.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                    喜欢:&nbsp;{{radioArticleId.like_count}}
+                </div>
+                <div class="ting_all_author">
+                    <div class="ting_author">
+                        主播:
+                        <a href="#">{{radioArticleId.nickname}}</a>
+                    </div>
+                    <div class="article_author">
+                        原文:
+                        <a href="#">{{radioArticleId.nickname}}</a>
+                    </div>
+                </div>
+                <div class="play_article" onclick="bf();">暂停Ting</div>
+            </div>
+        </div>
+        <!--原文块-->
+        <div class="ting_article_view">
+            <div class="title_label">原文</div>
+            <div class="article_content">
+                <span style="display: block;padding-bottom: 10px;">-</span>
+                {{radioArticleId.content| limitTo : 60 }}...
+                <span class="viewall">
+                    <a href="#/article/{{radioArticleId.article_id}}">VIEW ALL
+                        <img src="img/viewall.png">
+                    </a>
+                </span>
+
+            </div>
+
+        </div>
+        <!--评论块-->
+        <div class="ting_article_comment">
+            <div style="width: 640px;margin: 0 auto;">
+                <form class="new-comment">
+                    <a class="avatar" href="#/personal">
+                        <img ng-src="{{user.head}}" style="width:40px;">
+                    </a>
+                    <textarea placeholder="写下你的评论..." ng-model="content">
+                        <input type="hidden" id="article_id1" value="{{radioArticleId.article_id}}">
+                        <input type="hidden" id="user_id1" value="{{user.user_id}}">
+                    </textarea>
+                    <div class="write-function-block" style="height: 50px;">
+                        <div class="hint" style="float: left;margin: 20px 0 0 20px;font-size: 13px;color: #969696;">Ctrl+Return 发表</div>
+                        <button class="btn btn-send"
+                                style="float: right;width: 78px;margin: 10px 0;padding: 8px 18px;font-size: 16px;border: none;border-radius: 4px;color: #fff !important;background-color: #57ad68;cursor: pointer;outline: none;display: block;"
+                                ng-click="commentArticle(content)">
+                            发送
+                        </button>
+                        <a class="cancel" style="float: right;margin: 18px 30px 0 0;font-size: 16px;color: #969696;">取消</a>
+                    </div>
+                </form>
+                <div style="font-size: 20px;border-bottom: 1px solid #f0f0f0;padding-bottom: 10px;">
+                    <span>{{radioArticleId.comment_count}}条评论</span>
+                </div>
+                <div class="comment-list"  ng-repeat="comment in radioArticleId.commentList"
+                     style="padding: 20px 0 30px;border-bottom: 1px solid #f0f0f0;border-top: 1px solid #f0f0f0;">
+                    <div>
+                        <div class="author" style="margin-bottom: 15px;">
+                            <a class="avatar" href="#/user/{{radioArticleId.user_id}}">
+                                <img style="border-radius: 100%;width:40px" src="{{comment.head}}">
+                            </a>
+                            <div class="info" style="display: inline-block;vertical-align: middle;">
+                                <a href="#/user/{{radioArticleId.user_id}}" class="name" style="font-size: 15px;color: #333;margin-left: 4px;">{{comment.nickname}}</a>
+                                <div class="meta" style="font-size: 12px;color: #969696;">
+                                    <span> {{radioArticleId.comment_count-$index}}楼</span>
+                                    <span style="margin-left: 4px;">{{comment.comment_time| date : 'yyyy-MM-dd hh:mm:ss'}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment-wrap">
+                            <p style="font-size: 16px;">{{comment.content}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--音乐播放-->
+<script>
+
+    function bf(){
+        var music = document.getElementById("bgMusic");
+        if(music.paused)                     {
+            music.play();// 这个就是播放
+            $(".play_article").removeClass("play_start").addClass("play_stop").text(" 暂停Ting");
+        }else{
+            music.pause();// 这个就是暂停
+            $(".play_article").removeClass("play_stop").addClass("play_start").text(" 播放Ting");
+        }
+    }
+
+</script>

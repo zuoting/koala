@@ -1,0 +1,81 @@
+<div class="content_title">
+    <h1>用户管理</h1>
+</div>
+<div class="table_content">
+    <div>
+        <div class="search_table">
+            <div class="pull_left">
+                <a href="#/addUser" class="publish_article">
+                    <span id="add_btn">+</span>
+                    <span>添加用户</span>
+                </a>
+            </div>
+            <div class="pull_right" ng-submit="search()">
+                <input placeholder="搜索" type="text" ng-model="text">
+                <a href="javascript:void(0);" ng-click="search(text)">
+                    <img src="img/search.png" style="width: 22px;" >
+                </a>
+            </div>
+        </div>
+        <div class="table_container">
+            <div class="table_header">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                        <th>
+                            <div>用户ID</div>
+                        </th>
+                        <th >
+                            <div>账号</div>
+                        </th>
+                        <th>
+                            <div>密码</div>
+                        </th>
+                        <th>
+                            <div >昵称</div>
+                        </th>
+                        <th>
+                            <div>操作</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: none;" ng-repeat="allUsers in allUser|filter:text">
+                            <td>{{allUsers.user_id}}</td>
+                            <td >{{allUsers.account}}</td>
+                            <td>{{allUsers.password}}</td>
+                            <td>{{allUsers.nickname}}</td>
+                            <td class="operate">
+                                <div ng-click="showUser($index)">修改</div>
+                                <div ng-click="deleteUser($index)">删除</div>
+                            </td>
+                         </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--分页-->
+    <nav class="footer">
+        <ul class="pagination" ng-model="maxSize" num-pages="numPages" max-size="maxSize">
+            <li>
+                <a ng-click="Previous()">
+                    <span>上一页</span>
+                </a>
+            </li>
+            <li ng-repeat="page in pageList" ng-class="{active: isActivePage(page)}">
+                <a ng-click="selectPage(page)">{{ page }}</a>
+            </li>
+            <li>
+                <a ng-click="Next()">
+                    <span>下一页</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="z_open_page_doctor">{{selPage}} / {{maxSize}}</div>
+
+</div>
+<script>
+
+</script>

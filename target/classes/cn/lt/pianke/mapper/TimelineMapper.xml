@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lt.pianke.dao.TimelineDAO">
+    <!--查询所有碎片-->
+    <resultMap id="timelineAllArticleResult" type="java.util.Map">
+        <id property="timeline_id" column="timeline_id"/>
+        <result property="pic_url" column="pic_url"/>
+        <result property="content" column="content"/>
+        <result property="write_time" column="write_time"/>
+        <result property="user_id" column="user_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="head" column="head"/>
+        <result property="label_id" column="label_id"/>
+    </resultMap>
+    <select id="getTimelines" resultMap="timelineAllArticleResult">
+        SELECT u.user_id,
+        u.head,
+        u.nickname,
+        t.timeline_id,
+        t.pic_url,
+        t.content,
+        t.write_time,
+        l.label_id,
+	    l.label_name
+        FROM t_user u,t_timeline t,t_label l
+        WHERE t.user_id=u.user_id
+        AND t.label_id=l.label_id
+        ORDER BY t.write_time
+    </select>
+
+    <!--根据碎片id获取该碎片所有详情数据-->
+    <resultMap id="timelineArticleInfoMap" type="java.util.Map">
+        <id property="timeline_id" column="timeline_id"/>
+        <result property="pic_url" column="pic_url"/>
+        <result property="content" column="content"/>
+        <result property="like_count" column="like_count"/>
+        <result property="comment_count" column="comment_count"/>
+        <result property="write_time" column="write_time"/>
+        <result property="user_id" column="user_id"/>
+        <result property="head" column="head"/>
+        <result property="nickname" column="nickname"/>
+        <collection property="timelineCommentList" column="timeline_id" javaType="java.util.ArrayList" select="getTimelineComments"/>
+    </resultMap>
+    <!--碎片评论结果集-->
+    <resultMap id="timelineCommentMap" type="java.util.Map">
+        <id property="timeline_comment_id" column="timeline_comment_id"/>
+        <result property="content" column="content"/>
+        <result property="comment_time" column="comment_time"/>
+        <result property="user_id" column="user_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="head" column="head"/>
+        <result property="timeline_id" column="timeline_id"/>
+    </resultMap>
+    <!-- 碎片详情主查询-->
+    <select id="getTimelineInfo" parameterType="Integer" resultMap="timelineArticleInfoMap">
+      SELECT
+      t.pic_url,
+      t.content,
+      t.write_time,
+      t.like_count,
+      u.user_id,
+      u.head,
+      u.nickname,
+      t.comment_count,
+      t.timeline_id
+      FROM  t_timeline t,t_user u
+      WHERE t.user_id=u.user_id
+      AND   t.timeline_id =  #{timeline_id}
+    </select>
+    <!--碎片评论列表子查询-->
+    <select id="getTimelineComments" parameterType="Integer" resultMap="timelineCommentMap">
+     SELECT
+        c.timeline_comment_id,
+        u.nickname,
+        u.head,
+        c.user_id,
+        c.content,
+        c.comment_time,
+        c.timeline_id
+        FROM
+        t_timelinecomment c,t_user u
+        WHERE c.timeline_id=#{timeline_id}
+        AND c.user_id =u.user_id
+        ORDER BY c.timeline_comment_id DESC
+    </select>
+
+
+</mapper>

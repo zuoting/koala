@@ -1,0 +1,86 @@
+<style>
+    .add_title{
+        position: relative;
+        padding: 15px 15px 15px 15px;
+        margin-bottom: 37px;
+    }
+    .add_title>h1{
+        margin: 0;
+        font-size: 24px;
+        float: left;
+    }
+    .backBtn{
+        position: absolute;
+        right: 0;
+        background: #fff;
+        border: 1px solid #d1d1d1;
+        border-radius: 2px;
+        padding: 2px;
+        cursor: pointer;
+    }
+    .backBtn > span {
+        padding: 0;
+        color: #333;
+    }
+    .backBtn> span:first-child{
+        border: 1px solid #333;
+        border-radius: 50%;
+        padding: 0 5px;
+    }
+    .add_user{
+        margin-left: 20px;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+    .add_user > input {
+        border: 1px solid #d1d1d1;
+        padding: 4px;
+    }
+</style>
+<div class="add_content">
+    <div class="add_title">
+        <h1>添加用户</h1>
+        <a href="#/userManage" class="backBtn">
+            <span><</span>
+            <span>返回列表</span>
+        </a>
+    </div>
+    <div class="add_user">
+        <span>账号</span>
+        <br>
+        <input type="text" ng-model="user.account" id="addAccount">
+    </div>
+    <div class="add_user">
+        <span>密码</span>
+        <br>
+        <input type="text" ng-model="user.password" id="addPassword">
+    </div>
+    <div class="add_user">
+        <span>昵称</span>
+        <br>
+        <input type="text" ng-model="user.nickname" id="addNickname">
+    </div>
+    <div class="add_user">
+        <span>头像</span>
+        <br>
+        <div id="tt" style="width: 100px;border: 1px solid #d1d1d1;height: 100px;">
+            <img ng-src="{{user.head}}" ng-model="user.head" id="hh" style="width:100px;height: 100px;position:absolute;"
+                 onclick="getPicture()">
+        </div>
+        <input type="file" file-model="myFile" onchange="setImage(this,tt,hh)" id="photoHead"
+               style="display: none" />
+
+    </div>
+    <div class="add_user">
+        <span>个人描述</span>
+        <br>
+        <textarea type="text" style="width: 400px;height: 100px;" ng-model="user.description" id="addDescription"></textarea>
+    </div>
+    <div class="add_user">
+        <button style="border: 1px solid #78bc85;color: #78bc85;"
+                type="submit" ng-click="insertUser(user)">
+            添加用户
+        </button>
+    </div>
+
+</div>

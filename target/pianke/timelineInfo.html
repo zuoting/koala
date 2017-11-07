@@ -1,0 +1,163 @@
+<style>
+    .post {
+        border: 1px solid #e8e8e8;
+        padding: 46px 86px;
+        margin-top: 10px;
+        margin-bottom: 125px;
+        background-color: #fff;
+        color: #333;
+        font-size: 12px;
+    }
+    /*作者区域*/
+    .note .post .article .author {
+        margin: 0px;
+        padding-bottom: 60px;
+    }
+    .note .post .article .author .info {
+        vertical-align: middle;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 8px;
+    }
+
+    .note .post .article .author .name a {
+        color: #333;
+    }
+    /*关注用户按钮 */
+    .note .post .article .author .meta {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #969696;
+        float: right;
+    }
+    .note .post .article .author .meta span {
+        padding-right: 5px;
+    }
+    .note .post .article .show-content {
+        color: #2f2f2f;
+        font-size: 16px;
+        font-weight: 400;
+        line-height:3;
+    }
+    .note .post .article .show-content .image-package {
+        padding-bottom: 25px;
+        text-align: center;
+    }
+    .note .post .article .show-content .image-package img {
+        width: 100%;
+    }
+    .new-comment {
+        position: relative;
+        margin-left: 48px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    .new-comment .avatar {
+        position: absolute;
+        left: -48px;
+    }
+    .new-comment textarea {
+        padding: 10px 15px;
+        width: 100%;
+        height: 80px;
+        font-size: 13px;
+        border: 1px solid #dcdcdc;
+        border-radius: 4px;
+        background-color: hsla(0,0%,71%,.1);
+        resize: none;
+        display: inline-block;
+        vertical-align: top;
+        outline-style: none;
+    }
+    .article .author div{
+        float: left;
+        margin-left: 15px;
+    }
+    .article .author a{
+        float: left;
+    }
+</style>
+<div class="index_content">
+    <div class="note">
+        <div class="post">
+            <div class="article">
+                <!-- 作者区域 -->
+                <div class="author">
+                    <a class="avatar" href="#/user/{{timelineId.user_id}}">
+                        <img src="{{timelineId.head}}" alt="180" style="width: 45px;">
+                    </a>
+                    <div class="info">
+                        <span class="name">
+                            <a href="#/user/{{timelineId.user_id}}">{{timelineId.nickname}}</a>
+                        </span>
+                    </div>
+                    <div class="card-like like-icon" style="margin-top: 8px;"></div>
+                    <!-- 文章数据信息 -->
+                    <div class="meta">
+                        <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                        <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最后编辑于 2017.04.19 09:37">
+                            {{timelineId.write_time| date : 'yyyy-MM-dd hh:mm:ss'}}
+                        </span>
+
+                    </div>
+                </div>
+
+                <!-- 文章内容 -->
+                <div class="show-content">
+                    <div class="image-package">
+                        <img ng-src="{{timelineId.pic_url}}"><br>
+                    </div>
+                    <p>
+                        {{timelineId.content}}
+                    </p>
+                </div>
+
+            </div>
+
+            <!--  写下你的评论-->
+            <form class="new-comment">
+                <a class="avatar" href="#/user/{{user.user_id}}">
+                    <img src="{{user.head}}" style="width:40px;">
+                </a>
+                <textarea placeholder="写下你的评论..." ng-model="content">
+                    <input type="hidden" id="article_id1" value="{{timelineId.timeline_id}}">
+                    <input type="hidden" id="user_id1" value="{{user.user_id}}">
+                </textarea>
+                <div class="write-function-block" style="height: 50px;">
+                    <div class="hint" style="float: left;margin: 20px 0 0 20px;font-size: 13px;color: #969696;">Ctrl+Return 发表</div>
+                    <button class="btn btn-send"
+                            style="float: right;width: 78px;margin: 10px 0;padding: 8px 18px;font-size: 16px;border: none;border-radius: 4px;color: #fff !important;background-color: #57ad68;cursor: pointer;outline: none;display: block;"
+                            ng-click="timelineCommentArticle(content)">
+                        发送
+                    </button>
+                    <a href="javascript:void (0);" class="cancel" style="float: right;margin: 18px 30px 0 0;font-size: 16px;color: #969696;">取消</a></div>
+            </form>
+            <div style="font-size: 20px;border-bottom: 1px solid #f0f0f0;padding-bottom: 10px;">
+                <span>{{timelineId.comment_count}}条评论</span>
+            </div>
+            <div class="comment-list" ng-repeat="comment in timelineId.timelineCommentList"
+                 style="padding: 20px 0 30px;border-bottom: 1px solid #f0f0f0;border-top: 1px solid #f0f0f0;">
+                <div>
+                    <div class="author" style="margin-bottom: 15px;">
+                        <a class="avatar" href="#/user/{{timelineId.user_id}}">
+                            <img style="border-radius: 100%;width:40px" src="{{comment.head}}">
+                        </a>
+                        <div class="info" style="display: inline-block;vertical-align: middle;">
+                            <a href="#/user/{{timelineId.user_id}}" class="name" style="font-size: 15px;color: #333;margin-left: 4px;">
+                                {{comment.nickname}}
+                            </a>
+                            <div class="meta" style="font-size: 12px;color: #969696;">
+                                <span> {{timelineId.comment_count-$index}}楼</span>
+                                <span style="margin-left: 4px;">{{comment.comment_time| date : 'yyyy-MM-dd hh:mm:ss'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-wrap">
+                        <p style="font-size: 16px;">{{comment.content}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

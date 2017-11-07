@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lt.pianke.dao.TopicDAO">
+    <!-- 封装阅读块专题查询结果集-->
+    <resultMap id="readTopicResult" type="java.util.Map">
+        <id property="topic_id" column="topic_id"/>
+        <result property="topic_name" column="topic_name"/>
+        <result property="logo" column="logo"/>
+    </resultMap>
+    <!--查询阅读块专题-->
+    <select id="getAllReadTopics" resultMap="readTopicResult">
+          SELECT t.topic_id,
+          t.topic_name,
+          t.logo,
+          t.article_count
+          FROM t_topic t
+          LIMIT 0,9
+    </select>
+
+    <!-- 封装电台块专题查询结果集-->
+    <resultMap id="radioTopicResult" type="java.util.Map">
+        <id property="topic_id" column="topic_id"/>
+        <result property="topic_name" column="topic_name"/>
+        <result property="logo" column="logo"/>
+        <result property="article_count" column="article_count"/>
+    </resultMap>
+    <!--查询电台块专题-->
+    <select id="getAllRadioTopics" resultMap="radioTopicResult">
+        SELECT t.topic_id,
+        t.topic_name,
+        t.logo,
+        t.article_count
+        FROM t_topic t
+        LIMIT 9,15
+    </select>
+
+
+</mapper>

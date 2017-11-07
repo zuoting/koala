@@ -1,0 +1,221 @@
+<!-- 主页面中心图片-->
+<div class="navPic">
+    <!--左边专题图片-->
+    <div class="navPic_left">
+        <a href="#/article/{{articlePics[0].article_id}}">
+            <img ng-src="{{articlePics[0].thumbnail}}">
+            <span class="article_bg"></span>
+            <span class="article_title">{{articlePics[0].title}}</span>
+        </a>
+    </div>
+    <!--右上1专题图片-->
+    <div class="navPic_right">
+        <a href="#/radio/{{radioPicArticles[0].article_id}}">
+            <img ng-src="{{radioPicArticles[0].thumbnail}}">
+            <span class="radio_bg"></span>
+            <span class="radio_title">{{radioPicArticles[0].title}}</span>
+        </a>
+    </div>
+    <!--右上2专题图片-->
+    <div class="navPic_right">
+        <a href="#/radio/{{radioPicArticles[1].article_id}}">
+            <img ng-src="{{radioPicArticles[1].thumbnail}}">
+            <span class="radio_bg"></span>
+            <span class="radio_title">{{radioPicArticles[1].title}}</span>
+        </a>
+    </div>
+    <!--右下1专题图片-->
+    <div class="navPic_left">
+        <a href="#/article/{{articlePics[1].article_id}}">
+            <img ng-src="{{articlePics[1].thumbnail}}">
+            <span class="article_bg"></span>
+            <span class="article_title">{{articlePics[1].title}}</span>
+        </a>
+    </div>
+    <!--右下2专题图片-->
+    <div class="navPic_right">
+        <a href="#/radio/{{radioPicArticles[2].article_id}}">
+            <img ng-src="{{radioPicArticles[2].thumbnail}}">
+            <span class="radio_bg"></span>
+            <span class="radio_title">{{radioPicArticles[2].title}}</span>
+        </a>
+    </div>
+</div>
+<!--内容-->
+<div class="home_content">
+    <!--阅读|read模块-->
+    <div class="article_list">
+        <div class="title_label">阅读 | Hot Read</div>
+        <div class="row" ng-repeat="article in articles">
+            <div class="col-md-9">
+                <div class="article_info">
+                    <div class="articleTitle">
+                        <a href="#/article/{{article.article_id}}">
+                            {{article.title}}
+                        </a>
+                    </div>
+                    <div class="articleAuthor">
+                        <a href="#/user/{{article.user_id}}">
+                            By&nbsp;/&nbsp; {{article.nickname}}
+                        </a>
+                    </div>
+                    <div class="articleContent">
+                        {{article.content| limitTo : 60 }}...
+                        <span class="viewall">
+                            <a href="#/article/{{article.article_id}}">VIEW ALL
+                                <img src="img/viewall.png">
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="article_bottom">
+                    {{article.read_count}}次阅读&nbsp;&nbsp;|&nbsp;&nbsp;
+                    评论:{{article.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                    喜欢:{{article.like_count}}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a href="#/article/{{article.article_id}}">
+                    <img src="{{article.thumbnail}}">
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--听|Ting模块-->
+    <div class="ting_list">
+        <div class="title_label">听 | Hot TING</div>
+        <div class="row">
+            <div class="col-md-4" ng-repeat="radioArticle in radioArticles">
+                <div class="tingImg">
+                    <a href="#/radio/{{radioArticle.article_id}}">
+                        <img src="{{radioArticle.thumbnail}}">
+                        <span></span>
+                    </a>
+                </div>
+                <div class="tingInfo">
+                    <div class="tingTitle">
+                        <a href="#/radioInfo" target="_blank">
+                            {{radioArticle.title}}
+                        </a>
+                    </div>
+                    <div class="tingAuthor">
+                        <a href="#/user/{{radioArticle.user_id}}" target="_blank">
+                            主播&nbsp;/&nbsp; {{radioArticle.nickname}}
+                        </a>
+                    </div>
+                    <div class="ting_bottom">
+                        {{radioArticle.play_count}}次播放&nbsp;&nbsp;|&nbsp;&nbsp;
+                        评论:{{radioArticle.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;
+                        喜欢:{{radioArticle.like_count}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--热门作者模块-->
+    <div class="user_list">
+        <div class="title_label">
+            人气片客 | Hot Pianker
+            <a class="find-more" href="#/allUser" style="float: right;color: #333;">查看更多> </a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3" ng-repeat="user in users">
+                <div class="user_info">
+                    <div class="userLeft">
+                        <a href="#/user/{{user.user_id}}" target="_blank">
+                            <img src="{{user.head}}">
+                        </a>
+                    </div>
+                    <div class="userRight">
+                        <div class="userName">
+                            <a href="#/user/{{user.user_id}}" target="_blank">{{user.nickname}}</a>
+                        </div>
+                        <div class="userDescription">{{user.description}}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--查看更多内容按钮-->
+<div class="more_button">
+    <div class="btn_box">
+        <div class="btn btn_more">查看更多精选内容</div>
+    </div>
+</div>
+<!--更多内容-->
+<div class="more_content" style="display: none">
+    <div class="past_title">
+        <div class="title_label">往期精选</div>
+    </div>
+    <div class="img_group">
+        <div class="card-ting" style="left: 0px; opacity: 1;" ng-repeat="allArticle in allArticles">
+            <div class="card-img">
+                <a href="#/radio/{{allArticle.article_id}}" ng-show="{{allArticle.topic_type == '电台'}}">
+                    <img src="{{allArticle.thumbnail}}">
+                    <span></span>
+                </a>
+                <a href="#/article/{{allArticle.article_id}}" ng-show="{{allArticle.topic_type == '阅读'}}">
+                    <img src="{{allArticle.thumbnail}}">
+                </a>
+            </div>
+            <div class="card-item">
+                <div class="card-title">
+                    <a href="#/article/{{allArticle.article_id}}" target="_blank">
+                        {{allArticle.title}}
+                    </a>
+                </div>
+                <div class="card-content" ng-show="{{allArticle.topic_type == '阅读'}}">
+                    {{allArticle.content| limitTo : 60 }}...
+                    <span class="viewall">
+                            <a href="#/article/{{allArticle.article_id}}">VIEW ALL
+                                <img src="img/viewall.png">
+                            </a>
+                        </span>
+                </div>
+                <div class="card-bottom">
+                    <span class="card-type">
+                        <a href="#/read" ng-show="{{allArticle.topic_type == '阅读'}}">
+                             {{allArticle.topic_type}}
+                        </a>
+                        <a href="#/radio" ng-show="{{allArticle.topic_type == '电台'}}">
+                             {{allArticle.topic_type}}
+                        </a>
+                    </span>
+                    <span ng-show="{{allArticle.topic_type == '阅读'}}">
+                        {{allArticle.read_count}}次阅读&nbsp;&nbsp;|&nbsp;&nbsp;评论:{{allArticle.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;喜欢:{{allArticle.like_count}}
+                    </span>
+                    <span ng-show="{{allArticle.topic_type == '电台'}}">
+                        {{allArticle.play_count}}次播放&nbsp;&nbsp;|&nbsp;&nbsp;评论:{{allArticle.comment_count}}&nbsp;&nbsp;|&nbsp;&nbsp;喜欢:{{allArticle.like_count}}
+                    </span>
+                </div>
+                <div class="card-user">
+                    <div class="card-userInfo">
+                        <a href="#/user/{{allArticle.user_id}}" target="_blank">
+                            <img src="{{allArticle.head}}"> {{allArticle.nickname}}
+                        </a>
+                    </div>
+                    <div class="card-like like-icon"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="no_more">-&nbsp;已加载全部&nbsp;-</div>
+    <div class="loading"></div>
+</div>
+
+<script>
+$(function(){
+
+    $('.more_button').click(function () {
+        //alert("11");
+        $('.more_content').show();
+        $('.more_button').hide();
+        $('.no_more').hide(4000);
+        $('.loading').hide(4000);
+    });
+})
+</script>
