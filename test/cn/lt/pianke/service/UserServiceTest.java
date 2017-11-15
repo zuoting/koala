@@ -1,5 +1,6 @@
 package cn.lt.pianke.service;
 
+import cn.lt.pianke.model.Timeline;
 import cn.lt.pianke.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,18 +52,26 @@ public class UserServiceTest {
         userService.signUp(user);
     }
 
+    //登录
     @Test
     public void signIn() throws Exception {
-        User user=new User("123","12333");
+        User user=new User("yiyi","111");
         Map map=userService.signIn(user);
         System.out.println(map);
 
     }
 
+//    插入一个用户
     @Test
     public void insertUser() throws Exception{
         User user=new User("1","1","1","null","null",0 ,0 ,0) ;
-        userService.signUp(user);
+        userService.insertUser(user);
+    }
+
+    @Test
+    public void timelineUser() throws Exception{
+        Timeline timelines=new Timeline(1,3,"","I like!",0,0);
+        userService.timelineUser(timelines);
     }
 
 

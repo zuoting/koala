@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name="t_label")
 public class Label {
     private Integer label_id;
-    private Integer user_id;
+    private Integer admin_id;
     private String label_name;
     private String logo;
     private Integer timeline_count;
@@ -19,9 +19,9 @@ public class Label {
     public Label() {
     }
 
-    public Label(Integer label_id, Integer user_id, String label_name, String logo, Integer timeline_count) {
+    public Label(Integer label_id, Integer admin_id, String label_name, String logo, Integer timeline_count) {
         this.label_id = label_id;
-        this.user_id = user_id;
+        this.admin_id = admin_id;
         this.label_name = label_name;
         this.logo = logo;
         this.timeline_count = timeline_count;
@@ -38,13 +38,13 @@ public class Label {
     public void setLabel_id(Integer label_id) {
         this.label_id = label_id;
     }
-    @Column(name = "user_id",length = 11,nullable = false)
-    public Integer getUser_id() {
-        return user_id;
+    @Column(name = "admin_id",length = 11,nullable = false)
+    public Integer getAdmin_id() {
+        return admin_id;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setAdmin_id(Integer admin_id) {
+        this.admin_id = admin_id;
     }
     @Column(name = "label_name",length = 20,nullable = false)
     public String getLabel_name() {
@@ -70,4 +70,5 @@ public class Label {
     public void setTimeline_count(Integer timeline_count) {
         this.timeline_count = timeline_count;
     }
+
 }

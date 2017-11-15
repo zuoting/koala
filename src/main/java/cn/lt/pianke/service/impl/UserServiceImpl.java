@@ -1,13 +1,7 @@
 package cn.lt.pianke.service.impl;
 
-import cn.lt.pianke.dao.AuthorFollowDAO;
-import cn.lt.pianke.dao.LetterDAO;
-import cn.lt.pianke.dao.LikeDAO;
-import cn.lt.pianke.dao.UserDAO;
-import cn.lt.pianke.model.AuthorFollow;
-import cn.lt.pianke.model.Letter;
-import cn.lt.pianke.model.Token;
-import cn.lt.pianke.model.User;
+import cn.lt.pianke.dao.*;
+import cn.lt.pianke.model.*;
 import cn.lt.pianke.service.UserService;
 import cn.lt.pianke.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +27,10 @@ public class UserServiceImpl implements UserService{
     private LikeDAO likeDAO;
     @Autowired
     private LetterDAO letterDAO;
+    @Autowired
+    private TimelineDAO timelineDAO;
+    @Autowired
+    private LabelDAO labelDAO;
     /**
      * 查询热门作者
      *
@@ -233,6 +231,23 @@ public class UserServiceImpl implements UserService{
         example.createCriteria()
                 .andEqualTo("user_id",user_id);
         userDAO.deleteByExample(example);
+    }
+
+    /**
+     * 发表一个碎片
+     *
+     * @param timelines
+     */
+    @Override
+    public void timelineUser(Timeline timelines) {
+        timelineDAO.insert(timelines);//插入一条碎片
+        //更新用户发表一个碎片数
+        Example example = new Example(Label.class);
+        example.createCriteria()
+                .andEqualTo("label_id",timelines.getLabel_id());
+        Label label=labelDAO.selectByExample(example).get(0);
+        label.setTimeline_count(label.getTimeline_count()+1);
+        labelDAO.updateByExample(label,example);
     }
 
 }

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name="t_topic")
 public class Topic {
     private Integer topic_id;
-    private Integer user_id;
+    private Integer admin_id;
     private String topic_name;
     private String logo;
     private Integer article_count;
@@ -20,9 +20,9 @@ public class Topic {
     public Topic() {
     }
 
-    public Topic(Integer topic_id, Integer user_id, String topic_name, String logo, Integer article_count, String topic_type) {
+    public Topic(Integer topic_id, Integer admin_id, String topic_name, String logo, Integer article_count, String topic_type) {
         this.topic_id = topic_id;
-        this.user_id = user_id;
+        this.admin_id = admin_id;
         this.topic_name = topic_name;
         this.logo = logo;
         this.article_count = article_count;
@@ -40,13 +40,13 @@ public class Topic {
     public void setTopic_id(Integer topic_id) {
         this.topic_id = topic_id;
     }
-    @Column(name = "user_id",length = 11,nullable = false)
-    public Integer getUser_id() {
-        return user_id;
+    @Column(name = "admin_id",length = 11,nullable = false)
+    public Integer getAdmin_id() {
+        return admin_id;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setAdmin_id(Integer admin_id) {
+        this.admin_id = admin_id;
     }
     @Column(name = "topic_name",length = 20,nullable = false)
     public String getTopic_name() {
@@ -85,7 +85,7 @@ public class Topic {
     public String toString() {
         return "Topic{" +
                 "topic_id=" + topic_id +
-                ", user_id=" + user_id +
+                ", admin_id=" + admin_id +
                 ", topic_name='" + topic_name + '\'' +
                 ", logo='" + logo + '\'' +
                 ", article_count=" + article_count +

@@ -2,6 +2,7 @@ package cn.lt.pianke.web;
 
 import cn.lt.pianke.model.AuthorFollow;
 import cn.lt.pianke.model.Letter;
+import cn.lt.pianke.model.Timeline;
 import cn.lt.pianke.model.User;
 import cn.lt.pianke.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,5 +232,43 @@ public class UserController {
         userService.deleteUserById(user_id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    /**
+     * 用户发表了一个碎片
+     * @param request
+     * @param file
+     * @throws IOException
+     */
+    @RequestMapping(value = "timelines",method = RequestMethod.POST)
+    public @ResponseBody
+    void timelineUser(HttpServletRequest request,@RequestBody Timeline timeline,
+                    @RequestParam(value = "file",required=false) MultipartFile file) throws IOException {
+        Timeline timelines=new Timeline();
+        //设置碎片的所属话题id
+        Integer label_id=timeline.getLabel_id();
+        timelines.setLabel_id(label_id);
+        //设置碎片的作者id
+        Integer user_id=timeline.getUser_id();
+        timelines.setUser_id(user_id);
+        //设置写作时间
+        Timestamp write_time=timeline.getWrite_time();
+        timelines.setWrite_time(write_time);
+        // 设置内容
+        String content=timeline.getContent();
+        timelines.setContent(content);
+
+        //传送图片
+        if (file != null) {
+            String originalFilename = file.getOriginalFilename(); //原图片名 1.jpg
+            String newFileName = UUID.randomUUID()
+                    + originalFilename.substring(originalFilename.lastIndexOf("."));//新图片名 ******.jpg
+            String filePath = request.getSession().getServletContext().getRealPath("/") + newFileName; //服务器端路径+新图片名
+            file.transferTo(new File(filePath)); //将客户端文件上传到服务器
+            timelines.setPic_url(newFileName); //重新设置碎片图片
+            System.out.println(newFileName);
+        }
+        userService.timelineUser(timelines);
+    }
+
 
 }

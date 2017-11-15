@@ -2,6 +2,7 @@ package cn.lt.pianke.service;
 
 import cn.lt.pianke.model.AuthorFollow;
 import cn.lt.pianke.model.Letter;
+import cn.lt.pianke.model.Timeline;
 import cn.lt.pianke.model.User;
 
 import java.util.List;
@@ -102,4 +103,9 @@ public interface UserService {
      */
     void deleteUserById(int user_id);       //根据id删除一个实体
 
+    /**
+     * 发表一个碎片
+     * @param timelines
+     */
+    void timelineUser(Timeline timelines);
 }

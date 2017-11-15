@@ -122,6 +122,13 @@
         position: relative;
         width: 55px;
         text-align: right;
+        cursor: pointer;
+    }
+    .upload_img img{
+        position:absolute;
+        width:20px;
+        height: 20px;
+        margin-top:9px;
         background-image: url("img/upload_img.png");
         background-size: 18px;
         background-position: 0 center;
@@ -279,33 +286,32 @@
         <span class="date_English">June</span>
     </div>
     <div class="publish_content">
-        <textarea maxlength="140" placeholder="这一刻，你想说什么？" ng-if='activeTab==1'></textarea>
-        <textarea maxlength="140" placeholder="以匿名的方式倾诉，我们会将你的秘密随机推送给5位陌生人。" ng-if='activeTab==2'></textarea>
+        <textarea maxlength="140" placeholder="这一刻，你想说什么？" ng-model="content">
+            <input type="hidden" id="user_id" value="{{user.user_id}}">
+        </textarea>
         <div class="timeline_others">
-            <div class="timeline_type" ng-init='activeTab=1'>
-                <span ng-click='activeTab=1' ng-class='{active:activeTab==1}'>公开</span>
-                <span ng-click='activeTab=2' ng-class='{active:activeTab==2}'>秘密</span>
+            <div class="upload_img">
+                <div id="pic">
+                    <img ng-src="{{allTimelines.pic_url}}" ng-model="allTimelines.pic_url" id="url" onclick="getPicture()">
+                </div>
+                图片
+                <input type="file" file-model="myFile" onchange="setImage(this,pic,url)" id="photoTimeline"
+                       style="display: none" />
             </div>
-            <div class="upload_img">图片</div>
-            <div class="timeline_tag" ng-if='activeTab==1'>
-                <div class="tag_icon" ng-click="">
+
+            <div class="timeline_tag">
+                <div class="tag_icon">
                     添加标签
                 </div>
                 <div class="tag_menu">
                     <div class="tag_dropmenu">
                         <div class="tag_name" ng-repeat = "allLabel in allLabels">
-                            <a>{{allLabel.label_name}}</a>
+                            <a ng-click="getLabelId(allLabel.label_id)">{{allLabel.label_name}}</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="timeline_tag" ng-show='activeTab==2'>
-                <div class="tag_icon1">
-                    秘密
-                </div>
-            </div>
-            <button class="timeline_btn" ng-show='activeTab==1'>发布碎片</button>
-            <button class="timeline_btn" ng-show='activeTab==2'>匿名发布</button>
+            <button class="timeline_btn" ng-click="allTimeline(content)">发布碎片</button>
             <div class="timeline_count">0/140 <span>字</span></div>
         </div>
     </div>
