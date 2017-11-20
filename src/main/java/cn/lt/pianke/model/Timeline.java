@@ -33,9 +33,10 @@ public class Timeline {
         this.like_count = like_count;
         this.comment_count = comment_count;
     }
-    public Timeline(Integer label_id, Integer user_id,String pic_url, String content, Integer like_count, Integer comment_count) {
+    public Timeline(Integer label_id, Integer user_id,Timestamp write_time,String pic_url, String content, Integer like_count, Integer comment_count) {
         this.label_id = label_id;
         this.user_id = user_id;
+        this.write_time = write_time;
         this.pic_url = pic_url;
         this.content = content;
         this.like_count = like_count;

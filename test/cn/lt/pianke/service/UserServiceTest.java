@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +72,9 @@ public class UserServiceTest {
 
     @Test
     public void timelineUser() throws Exception{
-        Timeline timelines=new Timeline(1,3,"","I like!",0,0);
+        Date date=new Date();
+        Timestamp time=new Timestamp(date.getTime());
+        Timeline timelines=new Timeline(1,7,time,"","I hate!",0,0);
         userService.timelineUser(timelines);
     }
 

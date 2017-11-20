@@ -122,7 +122,6 @@
         position: relative;
         width: 55px;
         text-align: right;
-        cursor: pointer;
     }
     .upload_img img{
         position:absolute;
@@ -133,6 +132,7 @@
         background-size: 18px;
         background-position: 0 center;
         background-repeat: no-repeat;
+        cursor: pointer;
     }
     .timeline_tag{
         cursor: pointer;
@@ -282,20 +282,21 @@
 <!--发布碎片-->
 <div class="publish_timeline">
     <div class="now_date">
-        <span>3</span>
-        <span class="date_English">June</span>
+        <span>{{today|date:'dd'}}</span>
+        <span class="date_English">{{today|date:'MMM'}}</span>
     </div>
     <div class="publish_content">
-        <textarea maxlength="140" placeholder="这一刻，你想说什么？" ng-model="content">
-            <input type="hidden" id="user_id" value="{{user.user_id}}">
+        <textarea maxlength="140" placeholder="这一刻，你想说什么？" ng-model="timelineContent">
+            <input type="hidden" id="user_id" value="{{user.user_id}}"/>
         </textarea>
         <div class="timeline_others">
             <div class="upload_img">
-                <div id="pic">
-                    <img ng-src="{{allTimelines.pic_url}}" ng-model="allTimelines.pic_url" id="url" onclick="getPicture()">
+                <div id="ss">
+                    <!--<img ng-src="{{allTimelines.pic_url}}" ng-model="allTimelines.pic_url" id="url" onclick="getTimelinePicture()">-->
+                    <img id="url" onclick="getTimelinePicture()">
                 </div>
                 图片
-                <input type="file" file-model="myFile" onchange="setImage(this,pic,url)" id="photoTimeline"
+                <input type="file" file-model="myFile" onchange="setTimelineImage(this,ss,url)" id="photoTimeline"
                        style="display: none" />
             </div>
 
@@ -311,7 +312,7 @@
                     </div>
                 </div>
             </div>
-            <button class="timeline_btn" ng-click="allTimeline(content)">发布碎片</button>
+            <button class="timeline_btn" ng-click="allTimeline(timelineContent)">发布碎片</button>
             <div class="timeline_count">0/140 <span>字</span></div>
         </div>
     </div>

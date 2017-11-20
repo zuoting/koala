@@ -288,8 +288,14 @@ nav .head .navbar-icon .massage {
 .navbar-icon .userInfo {
     position: relative;
 }
+.userInfo .msg-menu ul li{
+    width: 100%;
+}
 .userInfo .msg-menu ul li:nth-child(1) {
     border-bottom: 1px solid #e8e8e8;
+}
+.userInfo .msg-menu ul li:nth-child(2){
+    cursor: pointer;
 }
 .navbar-icon .userInfo .user-icon {
     height: 42px;

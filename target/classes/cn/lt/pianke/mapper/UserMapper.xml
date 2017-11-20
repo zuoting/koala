@@ -100,7 +100,6 @@
         t.pic_url,
         t.content,
         t.comment_count,
-        t.read_count,
         t.like_count
         FROM t_user u,t_timeline t
         WHERE t.user_id=u.user_id

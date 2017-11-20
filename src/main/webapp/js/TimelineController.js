@@ -1,4 +1,5 @@
 app.controller('TimelineController',['$scope','$routeParams','$http','$rootScope',function ($scope,$routeParams,$http,$rootScope) {
+
     $scope.now = -1;
     // 获取碎片所有专题
     $http({
@@ -29,6 +30,9 @@ app.controller('TimelineController',['$scope','$routeParams','$http','$rootScope
     }).success(function (data) {
         $scope.timelineId = data; //数据绑定
     });
+
+    //设置当前时间
+    $scope.today = new Date();
 
     /*点击添加标签,列表显示出来*/
     $(".tag_icon").click(function(){
@@ -82,11 +86,11 @@ app.controller('TimelineController',['$scope','$routeParams','$http','$rootScope
     // 发表一个碎片
     $scope.labelId = 0
     $scope.getLabelId=function (id) {
-        alert(id);
+        // alert(id);
         $scope.labelId=id;
     }
-    $scope.allTimeline =function (content) {
-        alert(21);
+    $scope.allTimeline =function (timelineContent) {
+        // alert(21);
         alert(this.labelId);
         if(!$rootScope.token){
             swal({
@@ -97,26 +101,31 @@ app.controller('TimelineController',['$scope','$routeParams','$http','$rootScope
             });
             window.setTimeout("location.href='http://localhost:8080/sign_in.html'",1100);
         }
-
         var file=document.querySelector('input[type=file]').files[0];
+        console.log(file);
         $http({
-            url: 'http://localhost:8080/timelines',
+            url: 'http://localhost:8080/timelineUser',
             method: 'POST',
             data:{
                 file:file,
                 user_id:$rootScope.user.user_id,
                 label_id:this.labelId,
-                write_time:write_time,
-                content:content
+                write_time:new Date(),
+                content:timelineContent,
+                like_count:0,
+                comment_count:0
             },
             headers:{'Content-Type':undefined},//请求头的设置
             transformRequest:function (data) {
+                console.log(data);
                 var formData=new FormData();
                 formData.append('file',data.file);
                 formData.append('user_id',data.user_id);
                 formData.append('label_id',data.label_id);
                 formData.append('write_time',data.write_time);
                 formData.append('content',data.content);
+                formData.append('like_count',data.like_count);
+                formData.append('comment_count',data.comment_count);
                 return formData;
             }
         }).success(function (data) {
@@ -126,7 +135,7 @@ app.controller('TimelineController',['$scope','$routeParams','$http','$rootScope
                 timer: 1500,
                 showConfirmButton: false
             });
-            setCookie("user",data);//重新设置cookie
+            setCookie("timelineContent",data);//重新设置cookie
             setTimeout("window.location.reload()",1050);
         });
 
@@ -136,11 +145,11 @@ app.controller('TimelineController',['$scope','$routeParams','$http','$rootScope
 }]);
 
 //头像选择预览函数
-function getPicture() {
+function getTimelinePicture() {
     $("#photoTimeline").click(); //点击头像，模拟input type=file
 }
 
-function setImage(docObj,localImagId,imgObjPreview) {
+function setTimelineImage(docObj,localImagId,imgObjPreview) {
     // alert('change');
     var f=$(docObj).val();
     f=f.toLowerCase();

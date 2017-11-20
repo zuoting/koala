@@ -1,5 +1,5 @@
 app.controller('ArticleController',['$scope','$routeParams','$http','$rootScope',function ($scope,$routeParams,$http,$rootScope) {
-
+    // console.log($rootScope.user.user_id);
     /*文章详情*/
     var article_id=$routeParams.id;
     $http({

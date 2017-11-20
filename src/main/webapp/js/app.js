@@ -2,6 +2,7 @@ var app=angular.module('MyApp',['ngRoute'])
 app.run(function ($rootScope) {
     //$rootScope是全局作用域
 });
+
 app.config(['$routeProvider',function ($routeProvider) {
     $routeProvider
         // 前台路由配置

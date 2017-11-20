@@ -18,10 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by 刘婷 on 2017/6/9.
@@ -239,20 +236,26 @@ public class UserController {
      * @param file
      * @throws IOException
      */
-    @RequestMapping(value = "timelines",method = RequestMethod.POST)
+    @RequestMapping(value = "timelineUser",method = RequestMethod.POST)
     public @ResponseBody
-    void timelineUser(HttpServletRequest request,@RequestBody Timeline timeline,
+    void timelineUser(HttpServletRequest request,Timeline timeline,
                     @RequestParam(value = "file",required=false) MultipartFile file) throws IOException {
         Timeline timelines=new Timeline();
         //设置碎片的所属话题id
         Integer label_id=timeline.getLabel_id();
         timelines.setLabel_id(label_id);
+
         //设置碎片的作者id
         Integer user_id=timeline.getUser_id();
         timelines.setUser_id(user_id);
+
         //设置写作时间
-        Timestamp write_time=timeline.getWrite_time();
-        timelines.setWrite_time(write_time);
+        Date date=new Date();
+        Timestamp time=new Timestamp(date.getTime());
+        timelines.setWrite_time(time);
+        System.out.println("////////////////");
+        System.out.println("////////////////");
+
         // 设置内容
         String content=timeline.getContent();
         timelines.setContent(content);
@@ -267,6 +270,9 @@ public class UserController {
             timelines.setPic_url(newFileName); //重新设置碎片图片
             System.out.println(newFileName);
         }
+        System.out.println("/////////////");
+        System.out.println(timelines);
+        System.out.println("/////////////");
         userService.timelineUser(timelines);
     }
 
