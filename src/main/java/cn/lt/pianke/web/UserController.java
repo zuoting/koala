@@ -253,8 +253,6 @@ public class UserController {
         Date date=new Date();
         Timestamp time=new Timestamp(date.getTime());
         timelines.setWrite_time(time);
-        System.out.println("////////////////");
-        System.out.println("////////////////");
 
         // 设置内容
         String content=timeline.getContent();
@@ -270,9 +268,6 @@ public class UserController {
             timelines.setPic_url(newFileName); //重新设置碎片图片
             System.out.println(newFileName);
         }
-        System.out.println("/////////////");
-        System.out.println(timelines);
-        System.out.println("/////////////");
         userService.timelineUser(timelines);
     }
 

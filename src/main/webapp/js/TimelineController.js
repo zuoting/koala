@@ -110,7 +110,6 @@ app.controller('TimelineController',['$scope','$routeParams','$http','$rootScope
                 file:file,
                 user_id:$rootScope.user.user_id,
                 label_id:this.labelId,
-                write_time:new Date(),
                 content:timelineContent,
                 like_count:0,
                 comment_count:0
@@ -122,7 +121,6 @@ app.controller('TimelineController',['$scope','$routeParams','$http','$rootScope
                 formData.append('file',data.file);
                 formData.append('user_id',data.user_id);
                 formData.append('label_id',data.label_id);
-                formData.append('write_time',data.write_time);
                 formData.append('content',data.content);
                 formData.append('like_count',data.like_count);
                 formData.append('comment_count',data.comment_count);

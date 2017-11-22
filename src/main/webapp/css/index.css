@@ -717,7 +717,7 @@ nav .head .navbar-icon .massage {
     border: 1px solid #e8e8e8;
     opacity: 0;
     position: relative;
-    width: 291px;
+    width: 280px;
     background-color: #fff;
     font-size: 12px;
     float: left;
@@ -731,7 +731,7 @@ nav .head .navbar-icon .massage {
 }
 .img_group .card-img {
     display: block;
-    width: 290px;
+    width: 278px;
     overflow: hidden;
 }
 .img_group > div  a {
